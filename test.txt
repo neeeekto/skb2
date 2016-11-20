@@ -1,0 +1,88 @@
+Input: aaafff
+Output: aaafff
+Input: 000fff
+Output: 000fff
+Input: ABCDEF
+Output: abcdef
+Input: 1A2B3C
+Output: 1a2b3c
+Input: 000000
+Output: 000000
+Input: fff
+Output: ffffff
+Input: abc
+Output: aabbcc
+Input: 000
+Output: 000000
+Input:  abcdef
+Output: abcdef
+Input:  abcdef
+Output: abcdef
+Input: -123456
+No valid
+Input: 00
+No valid
+Input:
+No valid
+Input: bcdefg
+No valid
+Input: abcdeff
+No valid
+Input: 0bcdeff
+No valid
+Input: undefined
+No valid
+Input: undefined
+No valid
+Input: #ababab
+Output: ababab
+Input: #aba
+Output: aabbaa
+Input: #232323
+Output: 232323
+Input: ##ababab
+No valid
+Input: #abcd
+No valid
+Input: rgb(0, 255, 64)
+Output: 00ff40
+Input: rgb(255, 0, 0)
+Output: ff0000
+Input: rgb(128, 128, 128)
+Output: 808080
+Input:    rgb(  0, 255  , 64  )
+Output: 00ff40
+Input: rgb(128, 128, 257)
+No valid
+Input: rgb(128, 128, 256)
+No valid
+Input: rgb(128, 128)
+No valid
+Input: #rgb(128, 128, 128)
+No valid
+Input: rgb(128, 128, 128, 128)
+No valid
+Input: hsl(195,%20100%,%2050%)
+Output: 00bfff
+Input: hsl(0,%2065%,%2050%)
+Output: d22d2d
+Input: hsl(0,%200%,%200%)
+Output: 000000
+Input: hsl(0,%20101%,%200%)
+No valid
+Input: hsl(0,%20-100%,%200%)
+No valid
+Input: hsl(0,%20100,%200%)
+No valid
+Input: hsl(0, 0, 0)
+No valid
+Input: 0
+No valid
+Input: xyz(1, 1, 1)
+No valid
+Input: hsl(0,%2065%,%2050%)
+Output: d22d2d
+Input: hsl(0,%2065%,%20dd%)
+Output: 000000
+Input: hsl(0,%2065%,%20d%)
+Output: 000000
