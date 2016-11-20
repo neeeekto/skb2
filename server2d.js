@@ -8,28 +8,23 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', '*');
     res.header('Access-Control-Allow-Headers', 'Orogin, X-Requested-With, Content-Type, Accept');
     res.failColor = function(){
+        console.log('No valid');
        res.send('Invalid color'); 
     }
     next();
 })
 
-
 app.get('/', (req, res) =>{
-  debugger;
    let colorValue = req.query.color;
    console.log('Input: ' + colorValue)
    if(!colorValue) {
-       res.send('Invalid color');
-       console.log('No valid, empty\n');
+       res.failColor();
        return;
     }
     colorValue = colorValue.trim();
     if(/^hsl\(.*\)/i.test(colorValue)){
-        debugger;
         colorValue = colorValue.replace(/%20/g, '');
-        let tempColor = colorValue.match(/\(.*\)/i);
-        tempColor = tempColor[0].replace(/[()]/g, '');
-        //tempColor = tempColor.replace(/%/g, '');
+        let tempColor = colorValue.replace(/[hsl()]/g, '');
         tempColor = tempColor.split(',');
         for(let i = 1; i < tempColor.length; i++){
             if(!/%/ig.test(tempColor[i])) {res.failColor(); return; }
@@ -46,23 +41,21 @@ app.get('/', (req, res) =>{
    }
 
    if(/^rgb\(.*\)/i.test(colorValue)){
-       
+       debugger;
        let tempColor =  colorValue.match(/([0-9])?([0-9])?([0-9])/ig);
-       if(tempColor.length < 3) { res.failColor(); return;}
-       colorValue = '';
+       if(tempColor.length != 3) { res.failColor(); return;}
        for(let rgb of tempColor){
            rgb = rgb^0;
            if(rgb > 255) {res.failColor(); return;}
-           let colorHex = rgb.toString(16);
-           if(colorHex.length < 2 ) colorHex = colorHex + colorHex;
-           colorValue = colorValue + colorHex;
        }
+       colorValue = convert.rgb.hex(...tempColor);
    }
    
-   if(colorValue[0] == '#') colorValue = colorValue.slice(1);
-   if(colorValue.length < 3 || colorValue.length > 6 || (colorValue.length > 3 && colorValue.length < 6)) {res.send('Invalid color');console.log('No valid, length \n'); return;}
+   colorValue = colorValue.replace(/^#/, '');
+
+   if(colorValue.length < 3 || colorValue.length > 6 || (colorValue.length > 3 && colorValue.length < 6)) {res.failColor();return;}
    for(let char of colorValue){
-       if(!/[0-9abcdef]/i.test(char)) {res.send('Invalid color');console.log('No valid, char test \n'); return;}
+       if(!/[0-9abcdef]/i.test(char)) {res.failColor(); return;}
    }
    if(colorValue.length == 3) {
        let tempColor = '';
@@ -74,10 +67,7 @@ app.get('/', (req, res) =>{
    console.log('Output: '+colorValue.toLowerCase());
    res.send('#' + colorValue.toLowerCase());
    return;
-
 })
-
-
 
 app.listen(3000, ()=>{
     console.log('Success! 3000 port run');
