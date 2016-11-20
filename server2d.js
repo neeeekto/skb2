@@ -29,6 +29,7 @@ app.get('/', (req, res) =>{
         for(let i = 1; i < tempColor.length; i++){
             if(!/%/ig.test(tempColor[i])) {res.failColor(); return; }
             tempColor[i] = tempColor[i].replace(/%/g, '');
+            if(/[\D]/i.test(tempColor[i])) {res.failColor(); return; }
         }
         if(tempColor.length < 3 || 
         (tempColor[0] > 360 || tempColor[0] < 0) || 
